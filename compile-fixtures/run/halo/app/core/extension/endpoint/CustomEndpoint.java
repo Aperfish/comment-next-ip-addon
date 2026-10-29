@@ -1,0 +1,1 @@
+package run.halo.app.core.extension.endpoint; import org.springframework.web.reactive.function.server.*; import run.halo.app.extension.GroupVersion; public interface CustomEndpoint {RouterFunction<ServerResponse> endpoint(); GroupVersion groupVersion();}

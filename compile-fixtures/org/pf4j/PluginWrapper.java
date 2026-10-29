@@ -1,0 +1,1 @@
+package org.pf4j; public class PluginWrapper {public PluginManager getPluginManager(){throw new UnsupportedOperationException();} public Plugin getPlugin(){throw new UnsupportedOperationException();} public ClassLoader getPluginClassLoader(){throw new UnsupportedOperationException();}}

@@ -1,0 +1,1 @@
+package run.halo.app.plugin; import java.util.Map; import com.fasterxml.jackson.databind.JsonNode; import reactor.core.publisher.Mono; public interface ReactiveSettingFetcher {Mono<Map<String,JsonNode>> getValues();}

@@ -1,0 +1,1 @@
+package org.springframework.web.reactive.function.server; import java.util.Optional; import java.net.InetSocketAddress; public interface ServerRequest {Optional<InetSocketAddress> remoteAddress(); Headers headers(); interface Headers {String firstHeader(String name);}}

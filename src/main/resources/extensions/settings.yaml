@@ -1,0 +1,94 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: comment-next-ip-addon-settings
+spec:
+  forms:
+    - group: ipLocation
+      label: IP 属地
+      formSchema:
+        - $formkit: switch
+          label: 显示评论 IP 属地
+          name: enabled
+          id: ipLocationEnabled
+          key: ipLocationEnabled
+          value: true
+          help: 使用内置 IPv4/IPv6 数据库判断国内外，再请求对应接口。显示国内省份·城市、直辖市城市·区县或国外国家·省份（州）·城市，缺少城市时只显示已有信息，前台不暴露完整 IP。
+        - $formkit: switch
+          if: "$get(ipLocationEnabled).value === true"
+          label: 国内 IP 显示区县（含直辖市）
+          name: domesticDistrictEnabled
+          id: ipLocationDomesticDistrictEnabled
+          key: ipLocationDomesticDistrictEnabled
+          value: false
+          help: 默认关闭。开启后普通城市显示省份·城市·区县，直辖市显示城市·区县；关闭后普通城市显示省份·城市，直辖市仅显示城市。接口无有效区县或离线回退时不推测区县。切换立即使用新缓存。已有配置会保留，请按需要关闭。
+        - $formkit: text
+          if: "$get(ipLocationEnabled).value === true"
+          label: 国内 IP API URL 模板（百度）
+          name: domesticApiUrlTemplate
+          id: ipLocationDomesticApiUrlTemplate
+          key: ipLocationDomesticApiUrlTemplate
+          value: "https://api.map.baidu.com/location/ip?ip={ip}&coor=bd09ll&ak=YOUR_BAIDU_AK"
+          validation: required
+          help: >-
+            必须包含 {ip}。将 YOUR_BAIDU_AK 替换为自己的百度地图服务端 AK；IPv6 定位需要百度开通相应权限。
+            支持百度地图 content.address_detail、百度千帆 data.prov/data.city 及常见 province/city JSON 字段。
+            例如广东·深圳，直辖市读取 district/county/area 区县字段，例如北京·海淀区；无区县时仅显示北京。旧版通用 apiUrlTemplate 不再参与分流，请将所需地址填入本项。
+        - $formkit: text
+          if: "$get(ipLocationEnabled).value === true"
+          label: 国外 IP API URL 模板
+          name: foreignApiUrlTemplate
+          id: ipLocationForeignApiUrlTemplate
+          key: ipLocationForeignApiUrlTemplate
+          value: "http://ip-api.com/json/{ip}?lang=zh-CN"
+          validation: required
+          help: >-
+            必须包含 {ip}，支持 HTTP/HTTPS。默认 ip-api 中文接口，读取 country/countryCode、regionName/state、city，例如美国·加利福尼亚州·洛杉矶。
+            国内外分流始终由内置数据库完成，不依赖此接口。默认 ip-api 主机限速为每分钟最多 40 次，触限时按下方设置回退。
+            API 地址和密钥仅由后端使用。
+        - $formkit: number
+          if: "$get(ipLocationEnabled).value === true"
+          label: 成功结果缓存时长（分钟）
+          name: cacheMinutes
+          id: ipLocationCacheMinutes
+          key: ipLocationCacheMinutes
+          value: 1440
+          min: 1
+          max: 43200
+          validation: required
+          help: 成功结果按此时长缓存；离线回退缓存 1 分钟，空结果缓存 30 秒。修改任一 API URL 或缓存/超时/回退设置后使用新缓存。
+        - $formkit: number
+          if: "$get(ipLocationEnabled).value === true"
+          label: 接口超时（毫秒）
+          name: timeoutMillis
+          id: ipLocationTimeoutMillis
+          key: ipLocationTimeoutMillis
+          value: 3000
+          min: 500
+          max: 10000
+          validation: required
+          help: 每次在线请求最多等待此时间；失败、超时、格式错误、限流时按下方设置回退。全局最多 8 个并发在线请求，同一 IP 的相同配置请求合并。
+        - $formkit: switch
+          if: "$get(ipLocationEnabled).value === true"
+          label: 在线失败时回退内置离线库
+          name: offlineFallback
+          id: ipLocationOfflineFallback
+          key: ipLocationOfflineFallback
+          value: true
+          help: 开启时接口失败使用离线省市/国家城市；关闭时在线失败不显示属地。此开关不影响本地分流，未知归属绝不请求国外接口。缺少城市时不会编造城市。
+
+        - $formkit: text
+          label: 备用翻译请求地址（OpenAI 兼容）
+          name: translationUrl
+          value: ""
+          help: 留空关闭。填写完整 HTTPS Chat Completions 地址，以 /chat/completions 结尾；只发送地名，不发送 IP 和评论。未知英文才请求，最多等待 5 秒，失败保留原名。
+        - $formkit: text
+          label: 翻译模型
+          name: translationModel
+          value: ""
+          help: 填写服务商支持的模型名称；必须支持非流式 Chat Completions。
+        - $formkit: password
+          label: 翻译服务 API Key
+          name: translationApiKey
+          value: ""
+          help: 密钥仅用于后端请求。译文缓存 7 天，失败缓存 1 分钟；修改地址、模型或密钥后使用新缓存。

@@ -1,0 +1,1 @@
+package org.springframework.web.reactive.function.server; public class RouterFunctions {public static Builder route(){throw new UnsupportedOperationException();} public interface Builder {Builder GET(String p, HandlerFunction<ServerResponse> h); RouterFunction<ServerResponse> build();}}

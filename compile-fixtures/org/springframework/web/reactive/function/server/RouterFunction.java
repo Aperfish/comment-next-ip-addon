@@ -1,0 +1,1 @@
+package org.springframework.web.reactive.function.server; public interface RouterFunction<T extends ServerResponse> {}

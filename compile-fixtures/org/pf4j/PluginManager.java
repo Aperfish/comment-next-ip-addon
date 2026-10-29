@@ -1,0 +1,1 @@
+package org.pf4j; public interface PluginManager {PluginWrapper getPlugin(String id);}

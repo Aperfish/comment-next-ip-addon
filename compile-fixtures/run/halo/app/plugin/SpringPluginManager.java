@@ -1,0 +1,1 @@
+package run.halo.app.plugin; import org.pf4j.PluginWrapper; public interface SpringPluginManager {PluginWrapper getPlugin(String id);}

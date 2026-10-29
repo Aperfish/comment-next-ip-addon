@@ -1,0 +1,1 @@
+package run.halo.app.extension; public class GroupVersion {public GroupVersion(String g,String v){}}

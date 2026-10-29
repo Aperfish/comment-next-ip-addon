@@ -1,0 +1,24 @@
+apiVersion: plugin.halo.run/v1alpha1
+kind: Plugin
+metadata:
+  name: comment-next-ip-addon
+spec:
+  enabled: true
+  requires: ">=2.27.0"
+  version: "1.0.13-4"
+  displayName: "评论 Next 属地扩展"
+  logo: logo.png
+  homepage: https://github.com/Aperfish/comment-next-ip-addon
+  repo: https://github.com/Aperfish/comment-next-ip-addon
+  issues: https://github.com/Aperfish/comment-next-ip-addon/issues
+  description: "为原版评论 Next 1.0.13 提供国内外 IP 分流、细化属地和可选中文翻译。"
+  author:
+    name: "Aperfish"
+    website: "https://github.com/Aperfish"
+  settingName: comment-next-ip-addon-settings
+  configMapName: comment-next-ip-addon-config
+  pluginDependencies:
+    PluginCommentNext: "1.0.13"
+  license:
+    - name: GPL-3.0
+      url: https://www.gnu.org/licenses/gpl-3.0.html

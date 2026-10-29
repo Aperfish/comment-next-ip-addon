@@ -1,0 +1,1 @@
+package org.springframework.web.reactive.function.server; import reactor.core.publisher.Mono; public interface HandlerFunction<T extends ServerResponse> {Mono<T> handle(ServerRequest r);}

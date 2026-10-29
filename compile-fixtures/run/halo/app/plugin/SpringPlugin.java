@@ -1,0 +1,1 @@
+package run.halo.app.plugin; import org.springframework.context.ApplicationContext; public interface SpringPlugin {ApplicationContext getApplicationContext();}
