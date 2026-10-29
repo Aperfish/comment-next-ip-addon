@@ -91,7 +91,4 @@
 
 
 
-## 构建与发布资料
-
-构建步骤见 [BUILD.md](BUILD.md)，版本说明见 [RELEASE_NOTES.md](RELEASE_NOTES.md)，变更记录见 [CHANGELOG.md](CHANGELOG.md)。发布前请阅读 [验收清单](docs/PUBLISH_CHECKLIST.md)、[验证记录](docs/VERIFICATION.md) 与 [数据处理说明](docs/PRIVACY.md)。
 
